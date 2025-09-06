@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    branches:
+        - '**'
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+      with:
+        submodules: true
+    - name: Generate sysroots
+      run: bash './main.sh'
+    - name: Create release
+      uses: softprops/action-gh-release@master
+      with:
+        tag_name: 0.1
+        name: Binutils snapshots
+        files: /tmp/*.tar.xz*
+        draft: false
+        prerelease: false
+        fail_on_unmatched_files: true
+        body: "* Initial release"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
