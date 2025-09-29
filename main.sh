@@ -13,6 +13,8 @@ git \
 
 cd "${binutils_directory}"
 
+git checkout 991b1443d376b9acbcd0c9e164b20e527f0e06cb
+
 ./src-release.sh 'binutils'
 
 tar \
