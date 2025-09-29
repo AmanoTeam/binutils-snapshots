@@ -7,7 +7,7 @@ sudo apt-get install --assume-yes 'gettext'
 
 git \
 	clone \
-	--depth '1' \
+	--depth '12' \
 	'https://sourceware.org/git/binutils-gdb.git' \
 	"${binutils_directory}"
 
