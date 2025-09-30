@@ -1,5 +1,7 @@
 #!/bin/bash
 
+declare -r workdir="${PWD}"
+
 declare -r binutils_tarball='/tmp/binutils.tar.xz'
 declare -r binutils_directory='/tmp/binutils'
 
@@ -13,7 +15,7 @@ git \
 
 cd "${binutils_directory}"
 
-git checkout 991b1443d376b9acbcd0c9e164b20e527f0e06cb
+patch -p01 < $workdir/patches/1.patch
 
 ./src-release.sh 'binutils'
 
