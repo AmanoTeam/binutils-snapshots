@@ -17,6 +17,11 @@ cd "${binutils_directory}"
 
 patch -p01 < $workdir/patches/1.patch
 
+git config --global user.email "105828205+Kartatz@users.noreply.github.com"
+git config --global user.name "Kartatz"
+
+git commit -m 'a' -a
+
 ./src-release.sh 'binutils'
 
 tar \
