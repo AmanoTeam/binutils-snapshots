@@ -7,7 +7,10 @@ declare -r workdir="${PWD}"
 declare -r binutils_tarball='/tmp/binutils.tar.xz'
 declare -r binutils_directory='/tmp/binutils'
 
-sudo apt-get install --assume-yes 'gettext'
+declare -r gdb_tarball='/tmp/gdb.tar.xz'
+declare -r gdb_directory='/tmp/gdb'
+
+sudo apt-get install --assume-yes 'gettext' 'libmpfr-dev'
 
 function checkout_source() {
 	
@@ -48,3 +51,25 @@ tar \
 			--threads='0' \
 			--compress \
 			-9 > "${binutils_tarball}"
+
+./src-release.sh 'gdb' || true
+
+tar \
+	--directory='/tmp' \
+	--extract \
+	--file="$(echo "${PWD}/gdb-"*'.tar')"
+
+rm --force --recursive "${gdb_directory}"
+
+mv '/tmp/gdb-'* "${gdb_directory}"
+
+tar \
+	--directory="$(dirname "${gdb_directory}")" \
+	--create \
+	--file=- \
+	'gdb' | \
+		xz \
+			--threads='0' \
+			--compress \
+			-9 > "${gdb_tarball}"
+
