@@ -40,10 +40,10 @@ tar \
 
 # rm --force --recursive "${binutils_directory}"
 
-mv '/tmp/binutils-'* "${binutils_directory}"
+mv '/tmp/binutils-'* '/tmp/binutils'
 
 tar \
-	--directory="$(dirname "${binutils_directory}")" \
+	--directory='/tmp' \
 	--create \
 	--file=- \
 	'binutils' | \
@@ -62,7 +62,7 @@ tar \
 mv '/tmp/gdb-'* "${gdb_directory}"
 
 tar \
-	--directory="$(dirname "${gdb_directory}")" \
+	--directory='/tmp' \
 	--create \
 	--file=- \
 	'gdb' | \
