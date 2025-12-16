@@ -5,7 +5,7 @@ set -eu
 declare -r workdir="${PWD}"
 
 declare -r binutils_tarball='/tmp/binutils.tar.xz'
-declare -r binutils_directory='/tmp/binutils'
+declare -r binutils_directory='/tmp/source'
 
 declare -r gdb_tarball='/tmp/gdb.tar.xz'
 declare -r gdb_directory='/tmp/gdb'
@@ -38,7 +38,7 @@ tar \
 	--extract \
 	--file="$(echo "${PWD}/binutils-"*'.tar')"
 
-rm --force --recursive "${binutils_directory}"
+# rm --force --recursive "${binutils_directory}"
 
 mv '/tmp/binutils-'* "${binutils_directory}"
 
@@ -58,8 +58,6 @@ tar \
 	--directory='/tmp' \
 	--extract \
 	--file="$(echo "${PWD}/gdb-"*'.tar')"
-
-rm --force --recursive "${gdb_directory}"
 
 mv '/tmp/gdb-'* "${gdb_directory}"
 
