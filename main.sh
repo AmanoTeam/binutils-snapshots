@@ -10,6 +10,9 @@ declare -r binutils_directory='/tmp/source'
 declare -r gdb_tarball='/tmp/gdb.tar.xz'
 declare -r gdb_directory='/tmp/gdb'
 
+declare -r gold_tarball='/tmp/gold.tar.xz'
+declare -r gold_directory='/tmp/gold'
+
 sudo apt-get install --assume-yes 'gettext' 'libmpfr-dev'
 
 function checkout_source() {
@@ -24,7 +27,7 @@ function checkout_source() {
 
 checkout_source 'https://sourceware.org/git/binutils-gdb.git' ||
 checkout_source 'https://gnu.googlesource.com/binutils-gdb' ||
-checkout_source 'https://github.com/bminor/binutils-gdb.git'
+checkout_source 'https://github.com/AmanoTeam/binutils'
 
 cd "${binutils_directory}"
 
@@ -71,3 +74,21 @@ tar \
 			--compress \
 			-9 > "${gdb_tarball}"
 
+./src-release.sh 'gold' || true
+
+tar \
+	--directory='/tmp' \
+	--extract \
+	--file="$(echo "${PWD}/gold-"*'.tar')"
+
+mv '/tmp/gold-'* "${gold_directory}"
+
+tar \
+	--directory='/tmp' \
+	--create \
+	--file=- \
+	'gold' | \
+		xz \
+			--threads='0' \
+			--compress \
+			-9 > "${gold_tarball}"
