@@ -74,6 +74,9 @@ tar \
 			--compress \
 			-9 > "${gdb_tarball}"
 
+git clean -f -d
+git restore .
+
 ./src-release.sh 'gold' || true
 
 tar \
